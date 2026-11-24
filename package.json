@@ -1,0 +1,22 @@
+{
+  "name": "studio-filmowe",
+  "version": "1.0.0",
+  "description": "Tworzenie filmów z kodu (hyperframes) — prosto z promptu lub przez pytania",
+  "main": "index.js",
+  "scripts": {
+    "nowy-film": "node src/cli/nowy-film.mjs",
+    "z-promptu": "node src/cli/z-promptu.mjs",
+    "render": "node src/cli/render.mjs",
+    "podglad": "node src/cli/podglad.mjs",
+    "sysroot": "node tools/fetch-sysroot.mjs",
+    "przyklad": "node src/cli/z-promptu.mjs \"Neonowy film o kawie: \"Zaparz dobrą kawę\" | \"Poczuj aromat\" | \"Rusz w miasto\", każda scena 3 sekundy, 1280x720, 30 fps, efekt slide, pasek postępu\" --nazwa przyklad-kawa"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.15.1",
+    "hyperframes": "^0.9.91"
+  },
+  "type": "module"
+}

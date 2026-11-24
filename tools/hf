@@ -1,0 +1,6 @@
+#!/bin/sh
+# Uruchamia hyperframes z właściwym środowiskiem (sysroot, ffmpeg, ffprobe).
+# Użycie: tools/hf <komenda hyperframes> [argumenty...]
+DIR="$(cd "$(dirname "$0")/.." && pwd)"
+STUDIO="$DIR" . "$DIR/tools/env.sh"
+exec "$DIR/node_modules/.bin/hyperframes" "$@"

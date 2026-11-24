@@ -1,0 +1,7 @@
+node_modules/
+vendor/
+.vibe/
+projects/*
+!projects/.gitkeep
+output/*
+!output/.gitkeep
