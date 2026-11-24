@@ -1,4 +1,4 @@
-import { walidujSpec, PALETY, EFEKTY, ROZDZIELCZOSCI, slugify } from "../lib/spec.mjs";
+import { walidujSpec, PALETY, EFEKTY, ROZDZIELCZOSCI, STYLE, DZWIEKI, SVG_PRESETY, slugify } from "../lib/spec.mjs";
 import { generujProjekt } from "../lib/generator.mjs";
 import { renderujProjekt } from "../lib/render.mjs";
 import { stworzAnkiete } from "../lib/ankieta.mjs";
@@ -42,6 +42,13 @@ async function main() {
   console.log("\nEfekty przejść: " + EFEKTY.join(", "));
   const effect = (await pytaj("Wybierz efekt", "mix")) || "mix";
 
+  console.log("\nStyle wizualne: " + STYLE.join(", "));
+  const style = (await pytaj("Wybierz styl", "domyslny")) || "domyslny";
+  console.log("\nGrafika SVG na scenach: " + SVG_PRESETY.join(", "));
+  const svg = await pytaj("Nazwa presetu lub mix (puste = brak)");
+  console.log("\nDźwięki (na każdej scenie): " + DZWIEKI.join(", "));
+  const sound = (await pytaj("Wybierz dźwięk", "brak")) || "brak";
+
   const progressBar = (await pytaj("Pasek postępu na dole? (t/n)", "t")).toLowerCase() !== "n";
   const sceneCounter = (await pytaj("Licznik scen (np. 2 / 5)? (t/n)", "n")).toLowerCase() === "t";
   const watermark = await pytaj("Znak wodny w rogu (puste = brak)");
@@ -60,6 +67,9 @@ async function main() {
     sceneDuration,
     palette,
     effect,
+    style,
+    sound,
+    svg: svg || null,
     scenes: sceny,
     extras: { progressBar, sceneCounter, watermark },
   });

@@ -9,7 +9,15 @@ export const PALETY = {
   klasyk: { nazwa: "Klasyczna czerń", tlo: "#000000", tekst: "#ffffff", akcent: "#ffd166", wyciszony: "#9a9a9a" },
 };
 
-export const EFEKTY = ["fade", "slide", "typewriter", "zoom", "pop", "mix"];
+export const EFEKTY = ["fade", "slide", "typewriter", "zoom", "pop", "stagger", "bounce", "wipe", "mix"];
+
+export const STYLE = ["domyslny", "kinowy", "grid", "gradient", "karta"];
+
+export const DZWIEKI = ["brak", "pop", "ding", "whoosh", "click", "zap"];
+
+export const SVG_PRESETY = ["gwiazda", "blyskawica", "serce", "ksiezyc", "fala", "strzalka", "okrag", "kwiat", "mix"];
+
+export { SFX_PRESETY as DZWIEKI_PRESETY } from "./sfx.mjs";
 
 export const ROZDZIELCZOSCI = {
   "1": { label: "1920×1080 (Full HD, poziomo)", width: 1920, height: 1080 },
@@ -44,6 +52,7 @@ export function normalizujSceny(sceny, domyslnyCzas = 4) {
       sub: String(s.sub || "").trim(),
       duration: clamp(Number(s.duration) || domyslnyCzas, 1, 60),
       effect: EFEKTY.includes(s.effect) ? s.effect : null,
+      svg: typeof s.svg === "string" && s.svg ? s.svg : null,
     }));
   if (!lista.length) lista.push({ text: "Twój film", sub: "", duration: domyslnyCzas, effect: null });
   return lista;
@@ -69,6 +78,9 @@ export function walidujSpec(s) {
     duration: s.duration ? clamp(Number(s.duration), 1, 600) : null,
     palette: paleta,
     effect: EFEKTY.includes(s.effect) ? s.effect : "mix",
+    style: STYLE.includes(s.style) ? s.style : "domyslny",
+    sound: DZWIEKI.includes(s.sound) ? s.sound : "brak",
+    svg: typeof s.svg === "string" && s.svg ? s.svg : null,
     scenes,
     extras: {
       progressBar: s.extras?.progressBar !== false,
@@ -121,11 +133,40 @@ export function parsujPrompt(prompt) {
     }
   }
 
-  if (/maszyna do pisania|typewriter|pisząc|litera po literze/.test(p)) spec.effect = "typewriter";
+  if (/litery|jedna po drugiej|stagger|litera po literze|maszyna do pisania|typewriter/.test(p)) {
+    spec.effect = /maszyna|typewriter/.test(p) && !/stagger|litery|jedna po drugiej/.test(p) ? "typewriter" : "stagger";
+  }
+  else if (/odbicie|bounce|skok/.test(p)) spec.effect = "bounce";
+  else if (/wycieranie|wipe/.test(p)) spec.effect = "wipe";
+  else if (/maszyna do pisania|typewriter|pisząc/.test(p)) spec.effect = "typewriter";
   else if (/szybk|dynamiczn|energicz|wjazd|\bslide\b/.test(p)) spec.effect = "slide";
   else if (/\bzoom\b|powiększ|przybliż/.test(p)) spec.effect = "zoom";
   else if (/zanikaj|\bfade\b|powoli|znikaj/.test(p)) spec.effect = "fade";
   else if (/\bpop\b|wybuch|uderz/.test(p)) spec.effect = "pop";
+
+  if (/kinow|letterbox|cinema/.test(p)) spec.style = "kinowy";
+  else if (/siatka|krata|grid/.test(p)) spec.style = "grid";
+  else if (/gradient|degradat|teczow|tęczow/.test(p)) spec.style = "gradient";
+  else if (/karta|card|ramka/.test(p)) spec.style = "karta";
+
+  const SVG_KLUCZE = {
+    gwiazda: "gwiazda", star: "gwiazda", blyskawica: "blyskawica", bolt: "blyskawica",
+    serce: "serce", heart: "serce", ksiezyc: "ksiezyc", moon: "ksiezyc", fala: "fala", wave: "fala",
+    strzalka: "strzalka", arrow: "strzalka", okrag: "okrag", circle: "okrag", kwiat: "kwiat", flower: "kwiat",
+  };
+  for (const [klucz, preset] of Object.entries(SVG_KLUCZE)) {
+    if (new RegExp(`\\b${klucz}\\b`).test(p)) { spec.svg = preset; break; }
+  }
+  if (!spec.svg && /\bsvg\b|grafika|ikona/.test(p)) spec.svg = "mix";
+
+  if (/dźwięk|dzwiek|sound|sfx|efekt dźwiękowy/.test(p)) {
+    if (/whoosh|przelot|swish/.test(p)) spec.sound = "whoosh";
+    else if (/ding|dzwonek|bell|powiadom/.test(p)) spec.sound = "ding";
+    else if (/click|klik/.test(p)) spec.sound = "click";
+    else if (/zap|iskra/.test(p)) spec.sound = "zap";
+    else if (/pop|stuk|pstryk/.test(p)) spec.sound = "pop";
+    else if (!/brak|bez dźwięku|bez dzwieku|none|cisza/.test(p)) spec.sound = "pop";
+  }
 
   if (/pasek postępu|progress bar/.test(p)) spec.extras = { ...(spec.extras || {}), progressBar: true };
   if (/licznik scen|numer sceny/.test(p)) spec.extras = { ...(spec.extras || {}), sceneCounter: true };

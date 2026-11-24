@@ -10,7 +10,8 @@
     "podglad": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/podglad.mjs",
     "sysroot": "node tools/fetch-sysroot.mjs",
     "przyklad": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/z-promptu.mjs \"Neonowy film o kawie: \"Zaparz dobrą kawę\" | \"Poczuj aromat\" | \"Rusz w miasto\", każda scena 3 sekundy, 1280x720, 30 fps, efekt slide, pasek postępu\" --nazwa przyklad-kawa",
-    "postinstall": "node tools/ensure-gsap.mjs"
+    "postinstall": "node tools/ensure-gsap.mjs",
+    "przyklad-fx": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/z-promptu.mjs \"Film kinowy z efektami: \"Premiera\" | \"Nowy rozdział\" | \"Do zobaczenia\", styl kinowy, svg mix, dźwięk whoosh, efekt litery jedna po drugiej, 1280x720, każda scena 3 sekundy, pasek postępu\" --nazwa przyklad-fx"
   },
   "keywords": [],
   "author": "",

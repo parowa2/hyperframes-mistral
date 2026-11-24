@@ -71,7 +71,18 @@ tools/hf render --help                       # wszystkie opcje (fps, jakość, g
 - `palette`: `noc`, `neon`, `zachod`, `morska`, `papier`, `mieta`, `lawenda`, `klasyk` — lub własny obiekt
   `{ tlo, tekst, akcent, wyciszony }` z kolorami `#rrggbb`.
 - `effect`: `fade` (zanikanie + blur), `slide` (wjazd z boku), `typewriter` (odkrywanie tekstu),
-  `zoom` (powiększenie), `pop`, `mix` (rotacja efektów między scenami).
+  `zoom` (powiększenie), `pop`, `stagger` (litery jedna po drugiej), `bounce` (odbicie), `wipe`
+  (wycieranie), `mix` (rotacja efektów między scenami).
+- `style`: `domyslny`, `kinowy` (pasy letterbox + winieta), `grid` (neonowa siatka), `gradient`
+  (animowany gradient w tle), `karta` (tekst w karcie z blur).
+- `svg`: grafika SVG nad tekstem na każdej scenie — `gwiazda`, `blyskawica`, `serce`, `ksiezyc`,
+  `fala`, `strzalka`, `okrag`, `kwiat` lub `mix` (rotacja). Pojedyncza scena może nadpisać przez
+  `scenes[i].svg`.
+- `sound`: prosty dźwięk na każdej scenie — `pop`, `ding`, `whoosh`, `click`, `zap` (albo `brak`).
+  Generator syntezuje WAV ffmpegiem do `projects/<nazwa>/assets/` i dodaje `<audio data-start>` do
+  kompozycji, hyperframes miksuje go do MP4 (strumień AAC).
+
+Przykład zaawansowany: `npm run przyklad-fx`.
 
 ## Wskazówki do promptów
 
