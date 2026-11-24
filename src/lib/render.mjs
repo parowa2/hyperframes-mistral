@@ -1,20 +1,21 @@
 import { spawn } from "node:child_process";
 import { mkdirSync, chmodSync } from "node:fs";
 import { join, dirname } from "node:path";
+import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 function prywatnyCache() {
-  const cache = join(ROOT, ".cache");
-  for (const d of [cache, join(cache, "hyperframes"), join(cache, "puppeteer")]) {
+  const base = (process.env.HYPERFRAMES_CACHE_DIR || join(homedir(), ".hf-cache", "hyperframes")).replace(/[/\\]hyperframes$/, "");
+  for (const d of [base, join(base, "hyperframes"), join(base, "puppeteer")]) {
     mkdirSync(d, { recursive: true });
     try { chmodSync(d, 0o700); } catch {}
   }
   return {
-    HYPERFRAMES_CACHE_DIR: join(cache, "hyperframes"),
-    PUPPETEER_CACHE_DIR: join(cache, "puppeteer"),
-    XDG_CACHE_HOME: cache,
+    HYPERFRAMES_CACHE_DIR: join(base, "hyperframes"),
+    PUPPETEER_CACHE_DIR: join(base, "puppeteer"),
+    XDG_CACHE_HOME: base,
   };
 }
 

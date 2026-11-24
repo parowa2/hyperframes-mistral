@@ -4,12 +4,12 @@
   "description": "Tworzenie filmów z kodu (hyperframes) — prosto z promptu lub przez pytania",
   "main": "index.js",
   "scripts": {
-    "nowy-film": "HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes PUPPETEER_CACHE_DIR=$PWD/.cache/puppeteer XDG_CACHE_HOME=$PWD/.cache node src/cli/nowy-film.mjs",
-    "z-promptu": "HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes PUPPETEER_CACHE_DIR=$PWD/.cache/puppeteer XDG_CACHE_HOME=$PWD/.cache node src/cli/z-promptu.mjs",
-    "render": "HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes PUPPETEER_CACHE_DIR=$PWD/.cache/puppeteer XDG_CACHE_HOME=$PWD/.cache node src/cli/render.mjs",
-    "podglad": "HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes PUPPETEER_CACHE_DIR=$PWD/.cache/puppeteer XDG_CACHE_HOME=$PWD/.cache node src/cli/podglad.mjs",
+    "nowy-film": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/nowy-film.mjs",
+    "z-promptu": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/z-promptu.mjs",
+    "render": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/render.mjs",
+    "podglad": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/podglad.mjs",
     "sysroot": "node tools/fetch-sysroot.mjs",
-    "przyklad": "HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes PUPPETEER_CACHE_DIR=$PWD/.cache/puppeteer XDG_CACHE_HOME=$PWD/.cache node src/cli/z-promptu.mjs \"Neonowy film o kawie: \"Zaparz dobrą kawę\" | \"Poczuj aromat\" | \"Rusz w miasto\", każda scena 3 sekundy, 1280x720, 30 fps, efekt slide, pasek postępu\" --nazwa przyklad-kawa"
+    "przyklad": "HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes PUPPETEER_CACHE_DIR=$HOME/.hf-cache/puppeteer XDG_CACHE_HOME=$HOME/.hf-cache node src/cli/z-promptu.mjs \"Neonowy film o kawie: \"Zaparz dobrą kawę\" | \"Poczuj aromat\" | \"Rusz w miasto\", każda scena 3 sekundy, 1280x720, 30 fps, efekt slide, pasek postępu\" --nazwa przyklad-kawa"
   },
   "keywords": [],
   "author": "",

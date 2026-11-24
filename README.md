@@ -98,11 +98,13 @@ npm run nowy-film        # albo ankieta krok po kroku
 4. MP4 ląduje w `output/` — pobierz przez menu pliku (Download) albo `scp`.
 5. Podgląd na żywo: `npm run podglad -- <nazwa>`, potem zakładka **Ports** → `localhost:3002` (visibility: Private).
 
-> **Uwaga (Codespaces):** `~/.cache` jest tam grupowo-zapisywalny, a hyperframes odmawia instalacji Chrome
-> w takim katalogu („group-writable ~/.cache is refused”). Skrypty npm i `tools/env.sh` ustawiają więc
-> automatycznie `HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes` (chmod 700). Jeśli mimo to widzisz ten błąd —
-> zrób najpierw `git pull` (stary commit nie ma fixa). Przy ręcznym `npx hyperframes ...` wyeksportuj
-> zmienną samodzielnie: `export HYPERFRAMES_CACHE_DIR=$PWD/.cache/hyperframes`.
+> **Uwaga (Codespaces):** w Codespaces zarówno `~/.cache`, jak i katalog repo (`/workspaces/<repo>`, 775)
+> są grupowo-zapisywalne. Hyperframes odrzuca wtedy cache i **cicho wraca do `~/.cache`**, co kończy się
+> błędem „group-writable ~/.cache is refused” — nawet gdy ustawisz `HYPERFRAMES_CACHE_DIR` na katalog
+> wewnątrz repo. Dlatego skrypty npm i `tools/env.sh` ustawiają cache poza repo:
+> `HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes` (chmod 700; sam `$HOME` ma 750 = prywatny).
+> Jeśli mimo to widzisz ten błąd — zrób najpierw `git pull`. Przy ręcznym `npx hyperframes ...`
+> wyeksportuj: `export HYPERFRAMES_CACHE_DIR=$HOME/.hf-cache/hyperframes`.
 
 Alternatywa: własny VPS — patrz `scripts/setup-vps.sh` (instaluje Node 22 + ffmpeg + biblioteki Chrome jednym skryptemem, potem SSH z telefonu, np. Termius).
 
