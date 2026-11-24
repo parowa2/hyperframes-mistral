@@ -1,6 +1,7 @@
 node_modules/
 vendor/
 .vibe/
+.cache/
 projects/*
 !projects/.gitkeep
 output/*

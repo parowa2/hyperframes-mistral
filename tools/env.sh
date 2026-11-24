@@ -13,3 +13,13 @@ HYPERFRAMES_FFPROBE_PATH="$SYSROOT/usr/bin/ffprobe"
 export HYPERFRAMES_FFPROBE_PATH
 PATH="$SYSROOT/usr/bin:$STUDIO/node_modules/.bin:$PATH"
 export PATH
+# Prywatny cache przeglądarki (w Codespaces ~/.cache jest grupowo-zapisywalny i hyperframes go odrzuca)
+CACHE="$STUDIO/.cache"
+mkdir -p "$CACHE/hyperframes" "$CACHE/puppeteer"
+chmod 700 "$CACHE" "$CACHE/hyperframes" "$CACHE/puppeteer"
+HYPERFRAMES_CACHE_DIR="$CACHE/hyperframes"
+export HYPERFRAMES_CACHE_DIR
+PUPPETEER_CACHE_DIR="$CACHE/puppeteer"
+export PUPPETEER_CACHE_DIR
+XDG_CACHE_HOME="$CACHE"
+export XDG_CACHE_HOME

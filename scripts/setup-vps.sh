@@ -21,7 +21,7 @@ fi
 
 git clone "$REPO" "$DIR"
 cd "$DIR"
-npm ci
+npm install
 
 cat <<'EOF'
 
