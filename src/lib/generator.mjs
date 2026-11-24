@@ -231,6 +231,16 @@ function budujHtml(spec) {
 `;
 }
 
+function znajdzGsap() {
+  const candidates = [
+    join(ROOT, "node_modules", "gsap", "dist", "gsap.min.js"),
+    join(ROOT, "vendor", "gsap.min.js"),
+  ];
+  const found = candidates.find((p) => existsSync(p));
+  if (!found) throw new Error("Brak pliku gsap.min.js — uruchom najpierw: npm install");
+  return found;
+}
+
 export function generujProjekt(spec, nazwa) {
   const slug = slugify(nazwa || spec.title);
   const dir = join(ROOT, "projects", slug);
@@ -252,8 +262,7 @@ export function generujProjekt(spec, nazwa) {
     join(dir, "meta.json"),
     JSON.stringify({ id: slug, name: spec.title, createdAt: new Date().toISOString() }, null, 2) + "\n"
   );
-  const gsapSrc = join(ROOT, "vendor", "gsap.min.js");
-  if (existsSync(gsapSrc)) copyFileSync(gsapSrc, join(dir, "gsap.min.js"));
+  copyFileSync(znajdzGsap(), join(dir, "gsap.min.js"));
   writeFileSync(join(dir, "spec.json"), JSON.stringify({ ...spec, slug }, null, 2) + "\n");
   return { slug, dir };
 }
