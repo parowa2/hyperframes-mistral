@@ -1,9 +1,22 @@
 import { spawn } from "node:child_process";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, chmodSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+function prywatnyCache() {
+  const cache = join(ROOT, ".cache");
+  for (const d of [cache, join(cache, "hyperframes"), join(cache, "puppeteer")]) {
+    mkdirSync(d, { recursive: true });
+    try { chmodSync(d, 0o700); } catch {}
+  }
+  return {
+    HYPERFRAMES_CACHE_DIR: join(cache, "hyperframes"),
+    PUPPETEER_CACHE_DIR: join(cache, "puppeteer"),
+    XDG_CACHE_HOME: cache,
+  };
+}
 
 export function renderujProjekt(projectDir, outName) {
   const outDir = join(ROOT, "output");
@@ -13,6 +26,7 @@ export function renderujProjekt(projectDir, outName) {
   return new Promise((resolve, reject) => {
     const child = spawn(hf, ["render", "-o", out, "."], {
       cwd: projectDir,
+      env: { ...process.env, ...prywatnyCache() },
       stdio: ["ignore", "pipe", "pipe"],
     });
     let log = "";
